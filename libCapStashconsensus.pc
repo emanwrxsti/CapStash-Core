@@ -1,0 +1,10 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: CapStash Core consensus library
+Description: Library for the CapStash consensus protocol.
+Version: 27.1.0
+Libs: -L${libdir} -lCapStashconsensus
+Cflags: -I${includedir}
