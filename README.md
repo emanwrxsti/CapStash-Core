@@ -129,3 +129,53 @@ In software, that is CapStash.
 ## Join Vault 1337
 
 Discord: https://discord.gg/Cs8PRZQb
+
+
+---
+
+## Stable Source Notice
+
+This repository is intentionally based on the official CapStash Core v27.1.0 tagged source release.
+
+It is intentionally not synced with the latest upstream main branch because newer development commits may not sync blocks correctly on some systems.
+
+This repository is intended to provide a stable and working build target for Ubuntu 22.04 and similar Linux environments.
+
+---
+
+## Build on Ubuntu 22.04
+
+Install dependencies:
+
+    sudo apt update
+    sudo apt install -y build-essential libtool autotools-dev automake pkg-config bsdmainutils python3 libevent-dev libboost-system-dev libboost-filesystem-dev libboost-test-dev libboost-thread-dev libsqlite3-dev libminiupnpc-dev libzmq3-dev libqrencode-dev git curl wget gcc-12 g++-12
+
+Clone and build:
+
+    git clone https://github.com/emanwrxsti/CapStash-Core.git
+    cd CapStash-Core
+    ./autogen.sh
+    ./configure --without-gui CC=gcc-12 CXX=g++-12
+    make -j$(nproc)
+
+Start daemon:
+
+    ./src/CapStashd -daemon
+
+Check sync:
+
+    ./src/CapStash-cli getblockcount
+    ./src/CapStash-cli getnetworkinfo
+
+Optional install system-wide:
+
+    sudo install -m 0755 ./src/CapStashd /usr/local/bin/capstashd
+    sudo install -m 0755 ./src/CapStash-cli /usr/local/bin/capstash-cli
+    sudo install -m 0755 ./src/CapStash-wallet /usr/local/bin/capstash-wallet
+    sudo install -m 0755 ./src/CapStash-tx /usr/local/bin/capstash-tx
+    sudo install -m 0755 ./src/CapStash-util /usr/local/bin/capstash-util
+
+## Notes
+
+The generated src/test/fuzz/fuzz binary is intentionally not included because it is only a test/fuzzing artifact and is not required for normal node or wallet operation.
+
